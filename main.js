@@ -53,35 +53,31 @@ async function handleSubmit(event) {
   submitButton.disabled = true;
   
   try {
-    const formData = {
-      data: form.data.value,
-      hora: form.hora.value,
-      prefixoVeiculo: form.prefixo_veiculo.value,
-      placaVeiculo: form.placa_veiculo.value,
-      kmVeiculo: form.km_veiculo.value,
-      litragemDiesel: form.litragen_diesel.value,
-      contadorBomba: form.contador_bomba.value,
-      contadorInicial: form.contador_inicial.value,
-      arla: form.arla.value,
-      passouCartao: form.querySelector('input[name="passou_cartao"]:checked')?.value || '',
-      abastecedor: form.abastecedor.value
-    };
+    const formData = new FormData();
+    formData.append('data', form.data.value);
+    formData.append('hora', form.hora.value);
+    formData.append('prefixoVeiculo', form.prefixo_veiculo.value);
+    formData.append('placaVeiculo', form.placa_veiculo.value);
+    formData.append('kmVeiculo', form.km_veiculo.value);
+    formData.append('litragemDiesel', form.litragen_diesel.value);
+    formData.append('contadorBomba', form.contador_bomba.value);
+    formData.append('contadorInicial', form.contador_inicial.value);
+    formData.append('arla', form.arla.value);
+    formData.append('passouCartao', form.querySelector('input[name="passou_cartao"]:checked')?.value || '');
+    formData.append('abastecedor', form.abastecedor.value);
     
     const response = await fetch('https://script.google.com/macros/s/AKfycbwVzNRDy7SLGzdg6WOLbUiiWOcVBWsYPhiuhbFyG8GT_BstswPhIDqQFaGmu1I1FP7Y9g/exec', {
       method: 'POST',
-      mode: 'no-cors',
-      cache: 'no-cache',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData)
+      body: formData
     });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
     
-    // Limpa o formulário e mostra mensagem de sucesso
     form.reset();
     alert('Registro enviado com sucesso!');
     
-    // Esconde os campos secundários
     document.querySelector('.campos-secundarios').classList.remove('visible');
     setTimeout(() => {
       document.querySelector('.campos-secundarios').classList.add('hidden');

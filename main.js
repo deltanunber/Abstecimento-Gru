@@ -67,7 +67,7 @@ async function handleSubmit(event) {
       abastecedor: form.abastecedor.value
     };
     
-    const response = await fetch('https://script.google.com/macros/s/AKfycbwB1-GIbEcakB8o3Ri5d6N3Y1MzPn7ptrq-ug6v0UlivGcMETwZxT9KEZp2PCasH1HScw/exec', {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbwVzNRDy7SLGzdg6WOLbUiiWOcVBWsYPhiuhbFyG8GT_BstswPhIDqQFaGmu1I1FP7Y9g/exec', {
       method: 'POST',
       mode: 'no-cors',
       cache: 'no-cache',
